@@ -18,8 +18,14 @@ export const cartReducer = (
       if (existItem) {
         return {
           ...state,
-          cartItems: state.cartItems.map((x) =>
-            x.product === existItem.product ? item : x
+          cartItems: state.cartItems.map(
+            (x) => (x.product === existItem.product ? item : x)
+            // (x) => {
+            //   let newQty = Number(existItem.qty) + Number(item.qty);
+            //   return x.product === existItem.product
+            //     ? { ...existItem, qty: newQty }
+            //     : x;
+            // }
           ),
         };
       } else {

@@ -8,8 +8,11 @@ import Loading from "../components/LoadingError/Loading";
 import Message from "../components/LoadingError/Error";
 import moment from "moment";
 import axios from "axios";
-import { ORDER_CREATE_RESET, ORDER_PAY_RESET } from "./../Redux/Constants/OrderConstants";
-import { CART_CLEAR_ITEMS } from './../Redux/Constants/CartConstant';
+import {
+  ORDER_CREATE_RESET,
+  ORDER_PAY_RESET,
+} from "./../Redux/Constants/OrderConstants";
+import { CART_CLEAR_ITEMS } from "./../Redux/Constants/CartConstant";
 import { url } from "../splice/api";
 
 const OrderScreen = ({ match }) => {
@@ -38,6 +41,7 @@ const OrderScreen = ({ match }) => {
   useEffect(() => {
     const addPayPalScript = async () => {
       const { data: clientId } = await axios.get(`/api/config/paypal`);
+      console.log(clientId);
       const script = document.createElement("script");
       script.type = "text/javascript";
       script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
@@ -63,7 +67,7 @@ const OrderScreen = ({ match }) => {
     console.log(paymentResult);
     dispatch(payOrder(orderId, paymentResult));
     // dispatch({type: ORDER_CREATE_RESET})
-    dispatch({type: CART_CLEAR_ITEMS })
+    dispatch({ type: CART_CLEAR_ITEMS });
   };
 
   return (
@@ -239,7 +243,9 @@ const OrderScreen = ({ match }) => {
                     ) : (
                       <PayPalButton
                         amount={order.totalPrice}
-                        onSuccess={successPaymentHandler}
+                        onSuccess={(paymentResult) =>
+                          successPaymentHandler(paymentResult)
+                        }
                       />
                     )}
                   </div>

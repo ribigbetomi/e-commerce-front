@@ -27,8 +27,8 @@ const Login = ({ history, location }) => {
     e.preventDefault();
     dispatch(login(email, password));
   };
-  console.log(redirect);
-  console.log(location.search.split("="));
+  // console.log(redirect);
+  // console.log(location.search.split("="));
   return (
     <>
       <Header />

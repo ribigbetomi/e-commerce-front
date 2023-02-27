@@ -23,7 +23,7 @@ const PlaceOrderScreen = ({ history }) => {
     cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
   );
 
-  cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 1);
+  cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 2 : 1);
   cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
   cart.totalPrice = (
     Number(cart.itemsPrice) +
@@ -37,7 +37,7 @@ const PlaceOrderScreen = ({ history }) => {
   useEffect(() => {
     if (success) {
       history.push(`/order/${order._id}`);
-      dispatch(getOrderDetails(order._id))
+      dispatch(getOrderDetails(order._id));
       dispatch({ type: ORDER_CREATE_RESET });
     }
   }, [history, dispatch, success, order]);
